@@ -1,0 +1,29 @@
+{
+  "name": "dynamic-rows",
+  "title": "Dynamic rows",
+  "description": "Form rows added / removed with a click of a button",
+  "version": "1.0.0",
+  "homepage": "https://github.com/sebastiansulinski/dynamic-rows",
+  "author": {
+    "name": "Sebastian Sulinski",
+    "email": "info@ssdtutorials.com",
+    "url": "http://ssdtutorials.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sebastiansulinski/dynamic-rows.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sebastiansulinski/dynamic-rows/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/sebastiansulinski/dynamic-rows/blob/master/LICENSE"
+    }
+  ],
+  "dependencies": {
+    "jquery": ">= 1.9"
+  },
+  "keywords": []
+}
