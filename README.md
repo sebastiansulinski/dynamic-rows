@@ -1,5 +1,5 @@
 # Dynamic rows
-Form rows added / removed dynamically
+This plugin allows you to dynamically generate and remove rows containing the html form elements.
 
 ## Demo
 
