@@ -1,5 +1,5 @@
 # Dynamic rows
-Form rows added / removed with a click of a button
+Form rows added / removed dynamically
 
 ## Demo
 
