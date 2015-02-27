@@ -1,6 +1,10 @@
 # Dynamic rows
 Form rows added / removed with a click of a button
 
+## Demo
+
+[A simple demo can be seen here](http://jquery-dynamic-row.ssdtutorials.com/)
+
 ## Usage example
 
 Html structure:
