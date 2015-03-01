@@ -1,0 +1,29 @@
+{
+  "name": "dynamic-rows",
+  "version": "1.0.0",
+  "description": "Dynamically append new rows and remove the existing ones",
+  "main": "src/jquery.dynamic-rows.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sebastiansulinski/dynamic-rows.git"
+  },
+  "keywords": [
+    "jquery-plugin",
+    "ecosystem:jquery"
+  ],
+  "author": "Sebastian Sulinski",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sebastiansulinski/dynamic-rows/issues"
+  },
+  "dependencies": {
+    "jquery": ">= 1.9"
+  },
+  "homepage": "https://github.com/sebastiansulinski/dynamic-rows"
+}
