@@ -1,6 +1,6 @@
 /*
- * jQuery Dynamic Row plugin
- * Examples and documentation at: http://ssdtutorials.com
+ * ssdDynamicRows jQuery plugin
+ * Examples and documentation at: https://github.com/sebastiansulinski/dynamic-rows
  * Copyright (c) 2015 Sebastian Sulinski
  * Version: 1.0.0 (27-FEB-2015)
  * Licensed under the MIT.
