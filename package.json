@@ -1,6 +1,6 @@
 {
   "name": "dynamic-rows",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Dynamically append new rows and remove the existing ones",
   "main": "src/jquery.dynamic-rows.js",
   "directories": {

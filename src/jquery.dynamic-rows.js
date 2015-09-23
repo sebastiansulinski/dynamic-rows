@@ -2,11 +2,11 @@
  * ssdDynamicRows jQuery plugin
  * Examples and documentation at: https://github.com/sebastiansulinski/dynamic-rows
  * Copyright (c) 2015 Sebastian Sulinski
- * Version: 1.0.0 (27-FEB-2015)
+ * Version: 2.0.0 (27-FEB-2015)
  * Licensed under the MIT.
  * Requires: jQuery v1.9 or later
  */
-;(function($) {
+(function($) {
 
     $.fn.ssdDynamicRows = function(options) {
 
@@ -16,13 +16,16 @@
 
             eventType           : 'click',
 
-            classContainer      : 'dynamicRows',
-            classRow            : 'row',
+            container           : '.dynamicRows',
+            row                 : '.row',
 
-            classAddButton      : 'dynamicAdd',
-            classRemoveButton   : 'dynamicRemove',
+            addButton           : '.dynamicAdd',
+            removeButton        : '.dynamicRemove',
 
-            classWarning        : 'warning',
+            warning             : '.warning',
+
+            clearWarningMethod  : 'remove',
+            clearWarningClass   : 'show',
 
             nameDivider         : '-'
 
@@ -30,10 +33,10 @@
 
 
 
-        var row =           '.' + settings.classRow,
-            add =           '.' + settings.classAddButton,
-            remove =        '.' + settings.classRemoveButton,
-            warning =       '.' + settings.classWarning;
+        var row =           settings.row,
+            add =           settings.addButton,
+            remove =        settings.removeButton,
+            warning =       settings.warning;
 
 
         function preventStop(event) {
@@ -45,6 +48,20 @@
 
         }
 
+        function clearWarning(instance) {
+
+            "use strict";
+
+            switch(settings.clearWarningMethod) {
+                case 'removeClass':
+                    instance.removeClass(settings.clearWarningClass);
+                    break;
+                default:
+                    instance.remove();
+                    break;
+            }
+
+        }
 
         function dynamicAttributes(instance) {
 
@@ -78,7 +95,7 @@
 
             $.each(warnings, function(index, value) {
 
-                $(this).remove();
+                clearWarning($(this));
 
             });
 
@@ -179,4 +196,4 @@
 
     }
 
-}(jQuery));
+})(jQuery);
