@@ -63,7 +63,6 @@ $('.dynamicWrapper').ssdDynamicRows();
 
 ```
 eventType:          // event used to trigger 'add' button - default 'click'
-container:          // identifier of the wrapping container - default '.dynamicRows'
 row:                // identifier of the row wrapping container - default '.row'
 addButton:          // identifier associated with the Add button - default '.dynamicAdd'
 removeButton:       // identifier associated with the Remove button - default '.dynamicRemove',
