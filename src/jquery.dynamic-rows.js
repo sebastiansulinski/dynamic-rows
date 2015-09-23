@@ -2,7 +2,7 @@
  * ssdDynamicRows jQuery plugin
  * Examples and documentation at: https://github.com/sebastiansulinski/dynamic-rows
  * Copyright (c) 2015 Sebastian Sulinski
- * Version: 2.0.0 (27-FEB-2015)
+ * Version: 2.0.1 (27-FEB-2015)
  * Licensed under the MIT.
  * Requires: jQuery v1.9 or later
  */
@@ -16,7 +16,6 @@
 
             eventType           : 'click',
 
-            container           : '.dynamicRows',
             row                 : '.row',
 
             addButton           : '.dynamicAdd',
