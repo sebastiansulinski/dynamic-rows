@@ -17,7 +17,7 @@
     "jquery-plugin",
     "ecosystem:jquery"
   ],
-  "author": "Sebastian Sulinski",
+  "author": "Sebastian Sulinski <info@ssdtutorials.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/sebastiansulinski/dynamic-rows/issues"

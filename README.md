@@ -7,48 +7,67 @@ jQuery plugin, which allows you to dynamically append and remove rows containing
 
 ## Usage example
 
-Html structure:
+Html structure (illustrative purposes only):
 
 ```
-<form class="dynamicWrapper">
+<form>
 
+    <div data-ssd-dynamic-wrapper>
 
-    <div class="row">
+        <div class="row" data-ssd-dynamic-row>
 
-        <div class="medium-4 columns">
-            <label
-                for="product-0"
-                ></label>
-            <input
-                type="text"
-                name="product-0"
-                id="product-0">
-        </div>
+            <div class="medium-4 columns" data-ssd-dynamic-field>
+                <label for="product-0">
+                    <span data-validation="product-0">
+                        <span data-case="required">Invalid entry</span>
+                    </span>
+                </label>
+                <input
+                    type="text"
+                    name="product[0]"
+                    id="product-0"
+                    >
+            </div>
 
-        <div class="medium-4 columns">
-            <label
-                for="product-0"
-                ></label>
-            <input
-                type="text"
-                name="qty-0"
-                id="qty-0">
-        </div>
+            <div class="medium-4 columns" data-ssd-dynamic-field>
+                <label for="qty-0">
+                    <span data-validation="qty-0">
+                        <span data-case="required">Invalid entry</span>
+                    </span>
+                </label>
+                <input
+                    type="text"
+                    name="qty[0]"
+                    id="qty-0"
+                    >
+            </div>
 
-        <div class="medium-2 columns">
-            <a href="#"
-               class="postfix button dynamicRemove"
+            <div class="medium-2 columns">
+                <a
+                    href="#"
+                    class="postfix button expanded"
+                    data-ssd-dynamic-remove
                     ><i class="fa fa-minus"></i></a>
-        </div>
+            </div>
 
-        <div class="medium-2 columns">
-            <a href="#"
-               class="postfix button dynamicAdd"
-            ><i class="fa fa-plus"></i></a>
+            <div class="medium-2 columns">
+                <a
+                    href="#"
+                    class="postfix button expanded dn"
+                    data-ssd-dynamic-add
+                    ><i class="fa fa-plus"></i></a>
+            </div>
+
         </div>
 
     </div>
 
+
+    <input
+        type="submit"
+        class="button"
+        value="SUBMIT"
+        >
 
 </form>
 ```
@@ -56,84 +75,45 @@ Html structure:
 And to call the plugin:
 
 ```
-$('.dynamicWrapper').ssdDynamicRows();
+$('[data-ssd-dynamic-wrapper]').ssdDynamicRows({
+
+    clear_warning: function(row) {
+
+        row.find('[data-validation] [data-case]').removeClass('show');
+        row.find(':input').removeClass('warning');
+
+    },
+
+    other_elements: {
+        '[data-validation]' : 'data-validation'
+    }
+
+});
 ```
 
 ## Optional arguments
 
 ```
-eventType:          // event used to trigger 'add' button - default 'click'
-row:                // identifier of the row wrapping container - default '.row'
-addButton:          // identifier associated with the Add button - default '.dynamicAdd'
-removeButton:       // identifier associated with the Remove button - default '.dynamicRemove',
-warning:            // identifier representing with any potential validation messages wrapper - default '.warning'
-clearWarningMethod: // validation message clearing method - default 'remove', you can also choose 'removeClass'
-clearWarningClass:  // validation message clearing class - to be removed when clearing messages - default 'show'
-nameDivider:        // divider for row attributes i.e. product-0 - default '-'
+event_type:         // event type used with the `add` and `remove` buttons - default `click`
+
+hide_css_class:     // css class name that has its `display` property set to `none`.
+                    // Used for hiding buttons - default `dn`
+
+row:                // row container identifier - default '[data-ssd-dynamic-row]'
+
+button_add:         // add button identifier - default '[data-ssd-dynamic-add]'
+
+button_remove:      // remove button identifier - default '[data-ssd-dynamic-remove]',
+
+other_elements:     // object containing properties representing other elements i.e. `[data-validation]`
+                    // and their associated values representing attribute of these elements
+                    // that needs its value incremented with each new row i.e. `data-validation`
+                    // `data-validation="product-0"`
+
+divider:            // divider for the attributes i.e. `product-0` - default `-`
+
+clear_warning:      // method to be executed on the newly created row
+                    // example above shows how it can be used
+                    // to clear all validation messages / styling from the row
+                    // that has been used to clone / generate the new one
 ```
-
-If you'd like to use for instance `data-*` attributes for your validation messages you could use it in the following way:
-
-```
-<form class="dynamicWrapper">
-
-
-    <div class="row">
-
-        <div class="medium-4 columns">
-            <label
-                for="product-0"
-                >
-                <span data-validation="product-0">
-                    <span data-case="required">Invalid entry</span>
-                </span>
-                </label>
-            <input
-                type="text"
-                name="product-0"
-                id="product-0">
-        </div>
-
-        <div class="medium-4 columns">
-            <label
-                for="product-0"
-                >
-                <span data-validation="qty-0">
-                    <span data-case="required">Invalid entry</span>
-                </span>
-                </label>
-            <input
-                type="text"
-                name="qty-0"
-                id="qty-0">
-        </div>
-
-        <div class="medium-2 columns">
-            <a href="#"
-               class="postfix button dynamicRemove"
-                    ><i class="fa fa-minus"></i></a>
-        </div>
-
-        <div class="medium-2 columns">
-            <a href="#"
-               class="postfix button dynamicAdd"
-            ><i class="fa fa-plus"></i></a>
-        </div>
-
-    </div>
-
-
-</form>
-```
-
-and update the plugin initiation with:
-
-```
-$('.dynamicWrapper').ssdDynamicRows({
-    warningIdentifier: '[data-validation] [data-case]',
-    clearWarningMethod: 'removeClass',
-    clearWarningClass: 'show'
-});
-```
-
-With the above, when the validation message is showed it is appended the `show` class, which needs to be removed when generating new row - hence we've specified the `clearWarningClass` as `show` and `clearWarningMethod` as `removeClass` as oppose to `remove`, which would remove the validation message rather than hide it.

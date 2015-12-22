@@ -1,41 +1,34 @@
 /*
  * ssdDynamicRows jQuery plugin
  * Examples and documentation at: https://github.com/sebastiansulinski/dynamic-rows
- * Copyright (c) 2015 Sebastian Sulinski
- * Version: 2.0.1 (27-FEB-2015)
+ * Copyright (c) 2015 Sebastian Sulinski <info@ssdtutorials.com>
+ * Version: 3.0.0 (22-DEC-2015)
  * Licensed under the MIT.
  * Requires: jQuery v1.9 or later
  */
-(function($) {
+(function ($) {
 
-    $.fn.ssdDynamicRows = function(options) {
+    $.fn.ssdDynamicRows = function (options) {
 
         "use strict";
 
         var settings = $.extend({
 
-            eventType           : 'click',
+            event_type: 'click',
 
-            row                 : '.row',
+            hide_css_class: 'dn',
+            row: '[data-ssd-dynamic-row]',
 
-            addButton           : '.dynamicAdd',
-            removeButton        : '.dynamicRemove',
+            button_add: '[data-ssd-dynamic-add]',
+            button_remove: '[data-ssd-dynamic-remove]',
 
-            warning             : '.warning',
+            other_elements: {},
 
-            clearWarningMethod  : 'remove',
-            clearWarningClass   : 'show',
+            divider: '-',
 
-            nameDivider         : '-'
+            clear_warning: function (row) {}
 
         }, options);
-
-
-
-        var row =           settings.row,
-            add =           settings.addButton,
-            remove =        settings.removeButton,
-            warning =       settings.warning;
 
 
         function preventStop(event) {
@@ -47,152 +40,175 @@
 
         }
 
-        function clearWarning(instance) {
+        function removeButton(container, items) {
 
             "use strict";
 
-            switch(settings.clearWarningMethod) {
-                case 'removeClass':
-                    instance.removeClass(settings.clearWarningClass);
-                    break;
-                default:
-                    instance.remove();
-                    break;
+            container.find(settings.button_remove)
+                     .removeClass(settings.hide_css_class);
+
+            if (items.length < 2) {
+
+                items.last()
+                     .find(settings.button_remove)
+                     .addClass(settings.hide_css_class);
+
             }
 
         }
 
-        function dynamicAttributes(instance) {
+        function addButton(container, items) {
 
             "use strict";
 
-            var inputs = instance.find(':input'),
-                labels = instance.find('label'),
-                warnings = instance.find(warning);
+            container.find(settings.button_add)
+                     .addClass(settings.hide_css_class);
 
-            $.each(inputs, function(index, value) {
-
-                var name = $(this).prop('name').split(settings.nameDivider),
-                    newName = name[0] + settings.nameDivider + (parseInt(name[1], 10) + 1);
-
-                $(this).prop('name', newName)
-                    .prop('id', newName)
-                    .val('');
-
-            });
-
-            $.each(labels, function(index, value) {
-
-                var forAttr = $(this).prop('for').split(settings.nameDivider),
-                    newForAttr = forAttr[0] + settings.nameDivider + (parseInt(forAttr[1], 10) + 1);
-
-                $(this).prop('for', newForAttr)
-                    .prop('class', newForAttr)
-                    .find('.warning').remove();
-
-            });
-
-            $.each(warnings, function(index, value) {
-
-                clearWarning($(this));
-
-            });
-
-            return instance;
+            items.last()
+                 .find(settings.button_add)
+                 .removeClass(settings.hide_css_class);
 
         }
 
-        function dynamicTemplate(instance) {
+        function buttons(container) {
 
             "use strict";
 
-            return dynamicAttributes(instance.closest(row).clone());
+            var items = container.children(settings.row);
+
+            removeButton(container, items);
+            addButton(container, items);
 
         }
 
-        function dynamicAdd(instance) {
+        function setUp(container) {
 
             "use strict";
 
-            instance.on(settings.eventType, add, function(event) {
+            buttons(container);
 
-                preventStop(event);
+        }
 
-                var thisRow = $(this).closest(row),
-                    newItem = dynamicTemplate(thisRow);
 
-                instance.find(add)
-                    .hide();
 
-                instance.append(newItem);
+        function amendAttributes(row) {
 
-                instance.find(remove)
-                    .show();
+            "use strict";
+
+            var inputs = row.find(':input'),
+                labels = row.find('label');
+
+            $.each(inputs, function () {
+
+                var id = $(this).prop('id').split(settings.divider),
+                    new_index = (parseInt(id[1], 10) + 1),
+                    new_name = id[0] + '[' + new_index + ']',
+                    new_id = id[0] + settings.divider + new_index;
+
+                $(this).prop('name', new_name)
+                       .prop('id', new_id)
+                       .val('');
 
             });
 
-        }
+            $.each(labels, function () {
 
-        function dynamicRemove(instance) {
+                var attr_for = $(this).prop('for').split(settings.divider),
+                    new_attr_for = attr_for[0] + settings.divider + (parseInt(attr_for[1], 10) + 1);
 
-            "use strict";
+                $(this).prop('for', new_attr_for);
 
-            instance.on(settings.eventType, remove, function(event) {
+            });
 
-                preventStop(event);
+            $.each(settings.other_elements, function(obj, attr) {
 
-                var thisRow = $(this).closest(row);
+                var other = row.find(obj);
 
-                thisRow.fadeOut(200, function() {
+                $.each(other, function() {
 
-                    $(this).remove();
+                    var old_attr = $(this).attr(attr).split(settings.divider),
+                        new_attr = old_attr[0] + settings.divider + (parseInt(old_attr[1], 10) + 1);
 
-                    var allItems = instance.children(row);
-
-                    allItems.last(row)
-                        .find(add)
-                        .show();
-
-                    if (allItems.length < 2) {
-
-                        allItems.last(row)
-                            .find(remove)
-                            .hide();
-
-                    }
+                    $(this).attr(attr, new_attr);
 
                 });
 
             });
 
+            settings.clear_warning(row);
+
+            return row;
+
         }
 
-        function setUp(instance) {
+        function cloneRow(row) {
 
             "use strict";
 
-            instance.last(row)
-                .find(remove)
-                .hide();
+            return amendAttributes(row.closest(settings.row).clone());
 
         }
 
+        function add(container) {
 
+            "use strict";
 
+            container.on(
+                settings.event_type,
+                settings.button_add,
+                function (event) {
 
-        return this.each(function() {
+                    preventStop(event);
+
+                    var row = $(this).closest(settings.row),
+                        new_row = cloneRow(row);
+
+                    container.append(new_row);
+
+                    buttons(container);
+
+                }
+            );
+
+        }
+
+        function remove(container) {
+
+            "use strict";
+
+            container.on(
+                settings.event_type,
+                settings.button_remove,
+                function (event) {
+
+                    preventStop(event);
+
+                    var row = $(this).closest(settings.row);
+
+                    row.fadeOut(200, function () {
+
+                        $(this).remove();
+
+                        buttons(container);
+
+                    });
+
+                }
+            );
+
+        }
+
+        return this.each(function () {
 
             "use strict";
 
             setUp($(this));
-            dynamicAdd($(this));
-            dynamicRemove($(this));
+            add($(this));
+            remove($(this));
 
         });
 
 
-
-
     }
 
-})(jQuery);
+})(window.jQuery);

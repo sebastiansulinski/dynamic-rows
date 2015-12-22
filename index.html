@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>SSD Dynamic Rows</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.0.5/foundation.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <style>
+        body {
+            padding: 2rem 0;
+        }
+        .dn, .expanded.dn {
+            display: none;
+        }
+        [data-validation] [data-case] {
+            display: none;
+            color: #900;
+        }
+        [data-validation] .show[data-case] {
+            display: block;
+        }
+        input.warning {
+            border-color: #900;
+        }
+        #result {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="row">
+
+    <div class="column">
+
+
+
+
+
+        <form>
+
+
+            <div data-ssd-dynamic-wrapper>
+
+                <div class="row" data-ssd-dynamic-row>
+
+                    <div class="medium-4 columns" data-ssd-dynamic-field>
+                        <label for="product-0">
+                            <span data-validation="product-0">
+                                <span data-case="required">Invalid entry</span>
+                            </span>
+                        </label>
+                        <input
+                            type="text"
+                            name="product[0]"
+                            id="product-0"
+                            >
+                    </div>
+
+                    <div class="medium-4 columns" data-ssd-dynamic-field>
+                        <label for="qty-0">
+                            <span data-validation="qty-0">
+                                <span data-case="required">Invalid entry</span>
+                            </span>
+                        </label>
+                        <input
+                            type="text"
+                            name="qty[0]"
+                            id="qty-0"
+                            >
+                    </div>
+
+                    <div class="medium-2 columns">
+                        <a href="#" class="postfix button expanded" data-ssd-dynamic-remove><i class="fa fa-minus"></i></a>
+                    </div>
+
+                    <div class="medium-2 columns">
+                        <a href="#" class="postfix button expanded dn" data-ssd-dynamic-add><i class="fa fa-plus"></i></a>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <input
+                type="submit"
+                class="button"
+                value="SUBMIT"
+                >
+
+
+        </form>
+
+
+        <table id="result"></table>
+
+
+    </div>
+
+</div>
+
+<script src="./node_modules/jquery/dist/jquery.min.js"></script>
+<script src="./src/jquery.dynamic-rows.min.js"></script>
+<script>
+
+    $('[data-ssd-dynamic-wrapper]').ssdDynamicRows({
+
+        clear_warning: function(row) {
+
+            row.find('[data-validation] [data-case]').removeClass('show');
+            row.find(':input').removeClass('warning');
+
+        },
+
+        other_elements: {
+            '[data-validation]' : 'data-validation'
+        }
+
+    });
+
+    // Just a quick example
+    $('form').on('submit', function(event) {
+
+        event.preventDefault();
+
+        $(this).find('[data-case="required"]').removeClass('show');
+        $('#result').empty();
+
+        var inputs = $(this).find(':input').removeClass('warning');
+
+        inputs.each(function() {
+
+            if ($(this).val() === '') {
+
+                $(this).addClass('warning')
+                        .closest('[data-ssd-dynamic-field]')
+                        .find('[data-case="required"]')
+                        .addClass('show');
+
+            }
+
+        });
+
+        $.each($(this).serializeArray(), function(key, obj) {
+
+            $('#result').append('<tr><td>' + obj.name + '</td><td>' + obj.value + '</td></tr>');
+
+        });
+
+    });
+
+</script>
+</body>
+</html>
