@@ -99,11 +99,11 @@ event_type:         // event type used with the `add` and `remove` buttons - def
 hide_css_class:     // css class name that has its `display` property set to `none`.
                     // Used for hiding buttons - default `dn`
 
-row:                // row container identifier - default '[data-ssd-dynamic-row]'
+row:                // row container identifier - default `[data-ssd-dynamic-row]`
 
-button_add:         // add button identifier - default '[data-ssd-dynamic-add]'
+button_add:         // add button identifier - default `[data-ssd-dynamic-add]`
 
-button_remove:      // remove button identifier - default '[data-ssd-dynamic-remove]',
+button_remove:      // remove button identifier - default `[data-ssd-dynamic-remove]`,
 
 other_elements:     // object containing properties representing other elements i.e. `[data-validation]`
                     // and their associated values representing attribute of these elements
