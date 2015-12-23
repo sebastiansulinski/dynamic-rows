@@ -24,7 +24,7 @@ Html structure (illustrative purposes only):
                 </label>
                 <input
                     type="text"
-                    name="product[0]"
+                    name="product-0"
                     id="product-0"
                     >
             </div>
@@ -37,7 +37,7 @@ Html structure (illustrative purposes only):
                 </label>
                 <input
                     type="text"
-                    name="qty[0]"
+                    name="qty-0"
                     id="qty-0"
                     >
             </div>
