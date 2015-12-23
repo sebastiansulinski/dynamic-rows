@@ -2,7 +2,7 @@
  * ssdDynamicRows jQuery plugin
  * Examples and documentation at: https://github.com/sebastiansulinski/dynamic-rows
  * Copyright (c) 2015 Sebastian Sulinski <info@ssdtutorials.com>
- * Version: 3.0.0 (22-DEC-2015)
+ * Version: 3.0.1 (22-DEC-2015)
  * Licensed under the MIT.
  * Requires: jQuery v1.9 or later
  */
@@ -102,10 +102,9 @@
 
                 var id = $(this).prop('id').split(settings.divider),
                     new_index = (parseInt(id[1], 10) + 1),
-                    new_name = id[0] + '[' + new_index + ']',
                     new_id = id[0] + settings.divider + new_index;
 
-                $(this).prop('name', new_name)
+                $(this).prop('name', new_id)
                        .prop('id', new_id)
                        .val('');
 
@@ -114,7 +113,8 @@
             $.each(labels, function () {
 
                 var attr_for = $(this).prop('for').split(settings.divider),
-                    new_attr_for = attr_for[0] + settings.divider + (parseInt(attr_for[1], 10) + 1);
+                    new_index = (parseInt(attr_for[1], 10) + 1),
+                    new_attr_for = attr_for[0] + settings.divider + new_index;
 
                 $(this).prop('for', new_attr_for);
 
@@ -127,7 +127,8 @@
                 $.each(other, function() {
 
                     var old_attr = $(this).attr(attr).split(settings.divider),
-                        new_attr = old_attr[0] + settings.divider + (parseInt(old_attr[1], 10) + 1);
+                        new_index = (parseInt(old_attr[1], 10) + 1),
+                        new_attr = old_attr[0] + settings.divider + new_index;
 
                     $(this).attr(attr, new_attr);
 
