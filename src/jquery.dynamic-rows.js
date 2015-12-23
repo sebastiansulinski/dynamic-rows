@@ -2,7 +2,7 @@
  * ssdDynamicRows jQuery plugin
  * Examples and documentation at: https://github.com/sebastiansulinski/dynamic-rows
  * Copyright (c) 2015 Sebastian Sulinski <info@ssdtutorials.com>
- * Version: 3.0.1 (22-DEC-2015)
+ * Version: 3.0.2 (23-DEC-2015)
  * Licensed under the MIT.
  * Requires: jQuery v1.9 or later
  */
